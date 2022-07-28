@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Обратная связзь : {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Обратная связь</h1>
+
+<form  method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    {% if messages %}
+
+            {% for message in messages %}
+
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+
+    {% endif %}
+    <button type="submit" class="btn btn-primary btn-block">Send</button>
+</form>
+
+{% endblock %}
